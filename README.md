@@ -1,59 +1,134 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛠️ Digi-Tools - Laravel Role-Based Auth Starter
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![Laravel Version](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
+[![PHP Version](https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php)](https://php.net)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-## About Laravel
+A clean, modern, and production-ready Laravel 11 starter application equipped with a lightweight, built-in **Role-Based Access Control (RBAC)** authentication system.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Standard Authentication**: Out-of-the-box user registration, login, profile management, and password resets powered by **Laravel Breeze (Blade + Tailwind CSS)**.
+- **Lightweight Built-In RBAC**: Uses an Enum-based `'role'` column (`admin` & `user`) on the `users` table. Zero heavy external dependencies, making it clean, fast, and easy to maintain.
+- **Custom Middleware Protection**: Includes a `RoleMiddleware` to secure routes based on allowed roles.
+- **Differentiated Dashboards**:
+  - **Admin Dashboard (`/admin/dashboard`)**: Dedicated panel styled for Administrators, protected by the `role:admin` middleware.
+  - **User Dashboard (`/dashboard`)**: Standard panel displaying user details and access level.
+- **MySQL Ready**: Pre-configured database connections for MySQL/MariaDB (perfect for XAMPP environments).
+- **Fully Tested**: Features integration tests validating access blocks for guests, regular users, and admin access.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🔑 Seeded Demo Credentials
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Run the database seeder to immediately log in with the following accounts:
 
-## Laravel Sponsors
+| Email | Password | Role | Access Level |
+| :--- | :--- | :--- | :--- |
+| **`admin@example.com`** | `password` | `admin` | Full Access (Dashboards & Admin Panels) |
+| **`user@example.com`** | `password` | `user` | Standard Access (Blocked from Admin Panel) |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 🚀 Quick Start / Installation
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Follow these steps to set up the project locally:
 
-## Contributing
+### 1. Clone & Install PHP/Node Dependencies
+```bash
+git clone https://github.com/malik2341971-debug/digi-tools.git
+cd digi-tools
+composer install
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 2. Configure Environment variables
+Duplicate the example environment file:
+```bash
+copy .env.example .env
+```
 
-## Code of Conduct
+### 3. Generate Encryption Key
+```bash
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4. Configure the Database
+1. Open your MySQL server (e.g., through XAMPP Control Panel).
+2. Create a new database named `digi_tool`.
+3. Open your `.env` file and make sure the connection parameters match your setup:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=digi_tool
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-## Security Vulnerabilities
+### 5. Run Migrations & Seeders
+Migrate database tables (which include the new `role` column) and populate the demo accounts:
+```bash
+php artisan migrate:fresh --seed
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 6. Compile Assets & Start the Server
+Compile CSS/JS assets using Vite and spin up the PHP development server:
+```bash
+npm run build
+php artisan serve
+```
+Open **`http://127.0.0.1:8000`** in your browser to view the application!
 
-## License
+---
+
+## 🛠️ Codebase Highlights
+
+Below are the key files and folders that implement the RBAC system:
+
+* **Roles Enum** ([`app/Enums/UserRole.php`](app/Enums/UserRole.php)):
+  Stores valid user roles: `admin` and `user`.
+* **Database Migration** ([`database/migrations/0001_01_01_000000_create_users_table.php`](database/migrations/0001_01_01_000000_create_users_table.php)):
+  Adds `$table->string('role')->default('user');` to the schema.
+* **User Model** ([`app/Models/User.php`](app/Models/User.php)):
+  Casts the `'role'` attribute to the `UserRole` enum and contains the `isAdmin()` helper function.
+* **Role Middleware** ([`app/Http/Middleware/RoleMiddleware.php`](app/Http/Middleware/RoleMiddleware.php)):
+  Validates if the user's role is allowed to access routes:
+  ```php
+  public function handle(Request $request, Closure $next, string ...$roles): Response
+  {
+      if (! $request->user() || ! in_array($request->user()->role->value, $roles)) {
+          abort(403, 'Unauthorized action.');
+      }
+      return $next($request);
+  }
+  ```
+* **Middleware Mapping** ([`bootstrap/app.php`](bootstrap/app.php)):
+  Registers the `'role'` middleware alias.
+* **Route Protection** ([`routes/web.php`](routes/web.php)):
+  Restricts the Admin Dashboard route:
+  ```php
+  Route::get('/admin/dashboard', function () {
+      return view('admin.dashboard');
+  })->middleware(['auth', 'role:admin'])->name('admin.dashboard');
+  ```
+* **Integration Tests** ([`tests/Feature/RoleBasedAuthTest.php`](tests/Feature/RoleBasedAuthTest.php)):
+  Ensures guests are redirected, users are forbidden, and admins successfully enter the panel.
+
+---
+
+## 🧪 Running Tests
+
+To run the full unit and feature test suites (including our RBAC validation tests):
+```bash
+php artisan test
+```
+
+---
+
+## 📄 License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
